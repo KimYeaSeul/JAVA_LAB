@@ -18,6 +18,8 @@ public class Cutsomer {
 		*/
 		
 		public Cutsomer(String customerName, int customerID) {
+			customerGrade = "SILVER";
+			bonusRatio = 0.01;
 			this.customerID = customerID;
 			this.customerName = customerName;
 			System.out.println("Customer(String, int) 생성자 호출");

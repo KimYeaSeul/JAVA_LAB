@@ -22,4 +22,13 @@ public class VIPCustomer extends Cutsomer {
 		salesRatio= 0.1;
 		System.out.println("VIPCustomer() 생성자 호출");
 	}
+	
+	// overriding, 재구현
+
+	@Override
+	public int calcPrice(int price) {
+		bonusPoint += price * bonusRatio;
+		return price - (int)(price * salesRatio);
+	}
+	
 }
