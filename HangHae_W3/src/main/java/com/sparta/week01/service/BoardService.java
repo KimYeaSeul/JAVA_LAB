@@ -1,13 +1,10 @@
 package com.sparta.week01.service;
 
-import com.sparta.week01.api.BoardApiController;
-import com.sparta.week01.dto.BoardAllDto;
 import com.sparta.week01.dto.BoardDto;
 import com.sparta.week01.dto.ResponseDto;
 import com.sparta.week01.model.Board;
 import com.sparta.week01.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,11 +1,10 @@
-package com.sparta.week01.api;
+package com.sparta.week01.controller;
 
 import com.sparta.week01.dto.BoardDto;
 import com.sparta.week01.dto.ResponseDto;
 import com.sparta.week01.model.Board;
 import com.sparta.week01.repository.BoardRepository;
 import com.sparta.week01.service.BoardService;
-import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +20,10 @@ public class BoardApiController {
     @Autowired
     private BoardRepository boardRepository;
 
+    @GetMapping("/")
+    public String home(){
+        return "<h1>Welcome to Page</h1><h2>항해 3주차 개인프로젝트 페이지</h2>";
+    }
     // 글쓰기
     @PostMapping("/api/boards")
     public ResponseDto<Board> write(@RequestBody Map<String,String> param){
