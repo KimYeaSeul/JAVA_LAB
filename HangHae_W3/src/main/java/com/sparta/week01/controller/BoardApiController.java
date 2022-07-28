@@ -64,7 +64,7 @@ public class BoardApiController {
 
     @GetMapping("/")
     public String home(){
-        return "<h1>Welcome to Page</h1><h2>항해 3주차 개인프로젝트 페이지</h2>" +
+        return "<h1>Welcome to Page</h1><h2>항해 3주차 개인프로젝트 페이지</h2><h3>API 명세서</h3>" +
                 "<table style=\"border-collapse: collapse; width: 100%; height: 108px;\" border=\"1\" data-ke-align=\"alignLeft\">\n" +
                 "<tr style=\"height: 18px;\">\n" +
                 "<td style=\"width: 8.60469%; height: 18px;\">Method</td>\n" +
