@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RequiredArgsConstructor
 @Controller
@@ -26,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping("/user/signup")
-    public String registerUser(@RequestBody SignupRequestDto requestDto){
+    public String registerUser(SignupRequestDto requestDto){
         System.out.println("RequestBody requestDto : " + requestDto);
         //requestDto : SignupRequestDto(username=test, password=1234, email=test@gmail.com, admin=false, adminToken=)
         userService.registerUser(requestDto);

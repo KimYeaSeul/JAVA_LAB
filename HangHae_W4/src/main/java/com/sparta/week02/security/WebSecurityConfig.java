@@ -23,7 +23,10 @@ public class WebSecurityConfig {
     }
     @Bean
     public SecurityFilterChain filterChian(HttpSecurity http) throws Exception {
-        http.csrf().ignoringAntMatchers("/user/**");
+        http.csrf().disable();
+        http.csrf()
+                .ignoringAntMatchers("/user/**")
+                .ignoringAntMatchers("api/products/**");
         http.authorizeHttpRequests((authz) -> authz
                         .antMatchers("/image/**")
                         .permitAll()
@@ -34,12 +37,14 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin()
-                .loginPage("/user/login")
-                .defaultSuccessUrl("/")
-                .failureUrl("/user/login?error")
+                .loginPage("/user/login") // 로그인 View ( GET /user/login)
+                .loginProcessingUrl("/user/login") // 로그인 처리( POST /user/login)
+                .defaultSuccessUrl("/") // 로그인 처리 후 성공시 URL
+                .failureUrl("/user/login?error") // 로그인 처리 후 실패시 URL
                 .permitAll()
                 .and()
                 .logout()
+                .logoutUrl("/user/logout")
                 .permitAll();
 
         return http.build();

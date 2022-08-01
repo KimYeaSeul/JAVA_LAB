@@ -31,8 +31,8 @@
 <body>
 <div id="login-form">
   <div id="login-title">Sign up Select Shop</div>
-  <!-- form 전송시 -> x-www-~~ type  -->
-<!--  <form action="/user/signup" method="post">-->
+  <!-- form 전송시 -> x-www-form-encoded type  -->
+  <form action="/user/signup" method="post">
     <div class="login-id-label">Username</div>
     <input type="text" id="username" name="username" placeholder="Username" class="login-input-box">
 
@@ -46,38 +46,38 @@
       <input id="admin-check" type="checkbox" name="admin" onclick="onclickAdmin()" style="margin-top: 40px;">관리자
       <input id="admin-token" type="password" name="adminToken" placeholder="관리자 암호" class="login-input-box" style="display:none">
     </div>
-    <button id="login-id-submit" onclick="save()">회원 가입</button>
-<!--  </form>-->
+    <button id="login-id-submit">회원 가입</button>
+  </form>
   <script>
 
-    function save(){
-      alert("회원가입 로직 탐");
-      let data = {
-        username:$("#username").val(),
-        password:$("#password").val(),
-        email:$("#email").val(),
-        admin:"false",
-        adminToken:""
-		};
-      console.log(data);
-      // console.log(data.typeof());
-      $.ajax({
-        // 회원가입 수행 요청
-        type :"POST",
-        url:"/user/signup",
-        data: JSON.stringify(data), // http body data 따라서 mime 타입이 필요
-        contentType:"application/json; charset=utf-8",
-        dataType:"json"
-      })
-      .done(function(resp){   //  1
-        alert("join seccess");
-        console.log(resp);
-        //location.href="/blog";
-      })
-      .fail(function(error){
-        alert(JSON.stringify(error));
-      })
-    }
+    // function save(){
+    //   alert("회원가입 로직 탐");
+    //   let data = {
+    //     username:$("#username").val(),
+    //     password:$("#password").val(),
+    //     email:$("#email").val(),
+    //     admin:"false",
+    //     adminToken:""
+	// 	};
+    //   console.log(data);
+    //   // console.log(data.typeof());
+    //   $.ajax({
+    //     // 회원가입 수행 요청
+    //     type :"POST",
+    //     url:"/user/signup",
+    //     data: JSON.stringify(data), // http body data 따라서 mime 타입이 필요
+    //     contentType:"application/json; charset=utf-8",
+    //     dataType:"json"
+    //   })
+    //   .done(function(resp){   //  1
+    //     alert("join seccess");
+    //     console.log(resp);
+    //     //location.href="/blog";
+    //   })
+    //   .fail(function(error){
+    //     alert(JSON.stringify(error));
+    //   })
+    // }
   </script>
 </div>
 </body>
