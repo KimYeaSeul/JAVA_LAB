@@ -2,17 +2,14 @@ package com.sparta.week02.model;
 
 import com.sparta.week02.dto.BoardDto;
 import lombok.*;
-import org.hibernate.Hibernate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor // getter, setter 생성
 @NoArgsConstructor // 매개변수를 갖지 않는 constructor
 @AllArgsConstructor // 모든 변수를 매개변수로 갖는 constructor
 @Builder // builder 패턴 사용 가능
@@ -49,16 +46,4 @@ public class Board extends Timestamped{
 //    @LastModifiedDate
     private LocalDateTime modifiedAt;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Board board = (Board) o;
-        return id != null && Objects.equals(id, board.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }
