@@ -1,5 +1,6 @@
 package com.sparta.week02.security;
 
+import com.sparta.week02.repository.RefreshTokenRepository;
 import com.sparta.week02.repository.UserRepository;
 import com.sparta.week02.security.filter.JwtAuthorizationFilter;
 import com.sparta.week02.security.jwt.JwtAuthehnticationFilter;
@@ -27,6 +28,7 @@ public class WebSecurityConfig{
     private final CorsFilter corsFilter;
     private final AuthenticationConfiguration authenticationManager;
     private final UserRepository userRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
 //    private final UserDetailsServiceImpl userDetailsService;
 //    private final JwtAuthehnticationFilter jwtAuthehnticationFilter;
     @Bean
@@ -62,9 +64,10 @@ public class WebSecurityConfig{
                         .permitAll()
                         .anyRequest().authenticated()
                 )
+                .formLogin().disable()
                 .addFilter(corsFilter)
 //                .authenticationManager(authenticationManager)
-                .addFilterBefore( new JwtAuthehnticationFilter(authenticationManager(), TokenProvider()), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore( new JwtAuthehnticationFilter(authenticationManager(), TokenProvider(), refreshTokenRepository), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore( new JwtAuthorizationFilter(authenticationManager(), userRepository, TokenProvider()), UsernamePasswordAuthenticationFilter.class);
 //                .addFilter(new JwtAuthehnticationFilter(authenticationManager()));
 //

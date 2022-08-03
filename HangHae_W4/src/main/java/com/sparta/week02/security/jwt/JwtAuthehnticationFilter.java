@@ -1,7 +1,9 @@
 package com.sparta.week02.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sparta.week02.controller.RefreshToken;
 import com.sparta.week02.model.Users;
+import com.sparta.week02.repository.RefreshTokenRepository;
 import com.sparta.week02.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +25,7 @@ public class JwtAuthehnticationFilter extends UsernamePasswordAuthenticationFilt
     private final AuthenticationManager authenticationManager;
     private final TokenProvider tokenProvider;
 
+    private final RefreshTokenRepository refreshTokenRepository;
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
@@ -62,6 +65,21 @@ public class JwtAuthehnticationFilter extends UsernamePasswordAuthenticationFilt
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         String access_token = tokenProvider.generateAccessToken(userdetails.getUser().getUsername());
         String refresh_token = tokenProvider.generateRefreshToken(userdetails.getUser().getUsername());
+        RefreshToken rttr = refreshTokenRepository.findByUser(userdetails.getUser());
+        System.out.println(" repository refreshtoken " + rttr.getRefreshToken());
+        System.out.println("refreshtoken " + refresh_token);
+
+        if(rttr == null){
+            RefreshToken rt = RefreshToken.builder()
+                    .user(userdetails.getUser())
+                    .token(refresh_token)
+                    .build();
+            refreshTokenRepository.save(rt);
+        }else{
+            rttr.setRefreshToken(refresh_token);
+            refreshTokenRepository.save(rttr);
+        }
+
         PrintWriter out = response.getWriter();
         out.println("Login Success : Welcome "+userdetails.getUsername());
         response.addHeader("Authorization", "Bearer " + access_token);
