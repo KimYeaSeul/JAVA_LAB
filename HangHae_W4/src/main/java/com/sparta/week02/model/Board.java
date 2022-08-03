@@ -6,6 +6,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,24 +27,23 @@ public class Board extends Timestamped{
     private String title;
 
     @Column(nullable = false)
-    private String author;
-
-    @Column(nullable = false)
     private String password;
 
     @Lob
     private String content;
 
+    @ManyToOne // many => board, one => user
+    @JoinColumn(name = "author")
+    private Users author; //DB는 object를 저장할 수 없다. FK사용, but Java는 object를 저장할 수 있다.
+
+    @OneToMany(mappedBy = "board", fetch=FetchType.EAGER) //mappedBy는 연관관계의 주인이 아니다.(FK가 아니다.) DB에 컬럼을 만들지 마세요. Board를 Select할 때 Join문을 통해서 Reply값을 얻기 위해서 필요한거에용.
+    private List<Comment> reply;
+
     public void update(BoardDto boardDto){
         this.title = boardDto.getTitle();
         this.content = boardDto.getContent();
-        this.author = boardDto.getAuthor();
     }
-//    // 생성일 자동으로 넣어줌
-//    @CreatedDate
     private LocalDateTime createAt;
-
-//    @LastModifiedDate
     private LocalDateTime modifiedAt;
 
 }
