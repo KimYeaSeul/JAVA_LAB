@@ -68,7 +68,7 @@ public class JwtAuthehnticationFilter extends UsernamePasswordAuthenticationFilt
         if(rttr == null){
             RefreshToken rt = RefreshToken.builder()
                     .user(userdetails.getUser())
-                    .token(refresh_token)
+                    .refreshToken(refresh_token)
                     .build();
             refreshTokenRepository.save(rt);
         }else{

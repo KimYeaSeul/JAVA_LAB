@@ -11,6 +11,7 @@ import com.sparta.week02.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,13 +23,9 @@ public class CommentService {
 
     public Comment save(int boardId, Comment comment, Users user) {
 
-        Users requestUser = userRepository.findById(user.getId())
-                .orElseThrow(()->{
-                   return new CustomException(ErrorResponse.NOT_FOUND_USER);
-                });
         Board requestBoard = boardRepository.findById(boardId)
                 .orElseThrow(()->{
-                    return new CustomException(ErrorResponse.NOT_FOUND_BOARD);
+                    throw new CustomException(ErrorResponse.NOT_FOUND_BOARD);
                 });
         Comment reqComment = Comment.builder()
                         .content(comment.getContent())
@@ -36,7 +33,6 @@ public class CommentService {
                         .author(user)
                         .board(requestBoard)
                         .build();
-//        comment.update(requestUser, requestBoard, crd.getContent());
         return commentRepository.save(reqComment);
 
     }
@@ -45,6 +41,7 @@ public class CommentService {
         return commentRepository.findAll();
     }
 
+    @Transactional
     public Comment updateComment(int id, Comment comment, Users user){
         Comment resComment = commentRepository.findById(id).orElseThrow(
                 ()-> new CustomException(ErrorResponse.NOT_FOUND_BOARD));
