@@ -2,19 +2,15 @@ package com.sparta.week02.model;
 
 import com.sparta.week02.dto.UsersDto;
 import lombok.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@EntityListeners(AuditingEntityListener.class) // 시간을 자동으로 반영하도록 설정
+@Entity // 시간을 자동으로 반영하도록 설정
 public class Users extends Timestamped{
 
     @Id
@@ -34,9 +30,6 @@ public class Users extends Timestamped{
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
-
-    private LocalDateTime createAt;
-    private LocalDateTime modifiedAt;
     public Users(String username, String password, String email, UserRoleEnum role) {
         this.username = username;
         this.password = password;

@@ -1,10 +1,8 @@
-package com.sparta.week02.security.filter;
+package com.sparta.week02.security.jwt;
 
 import com.sparta.week02.model.Users;
 import com.sparta.week02.repository.UserRepository;
 import com.sparta.week02.security.UserDetailsImpl;
-import com.sparta.week02.security.jwt.JwtProperties;
-import com.sparta.week02.security.jwt.TokenProvider;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

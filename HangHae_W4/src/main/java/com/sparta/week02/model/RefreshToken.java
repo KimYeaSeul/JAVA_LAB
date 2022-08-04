@@ -1,6 +1,5 @@
-package com.sparta.week02.controller;
+package com.sparta.week02.model;
 
-import com.sparta.week02.model.Users;
 import lombok.*;
 
 import javax.persistence.*;

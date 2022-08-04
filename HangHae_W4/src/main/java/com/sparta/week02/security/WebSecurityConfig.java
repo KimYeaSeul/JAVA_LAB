@@ -2,7 +2,7 @@ package com.sparta.week02.security;
 
 import com.sparta.week02.repository.RefreshTokenRepository;
 import com.sparta.week02.repository.UserRepository;
-import com.sparta.week02.security.filter.JwtAuthorizationFilter;
+import com.sparta.week02.security.jwt.JwtAuthorizationFilter;
 import com.sparta.week02.security.jwt.JwtAuthehnticationFilter;
 import com.sparta.week02.security.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;

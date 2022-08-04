@@ -1,7 +1,7 @@
 package com.sparta.week02.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.week02.controller.RefreshToken;
+import com.sparta.week02.model.RefreshToken;
 import com.sparta.week02.model.Users;
 import com.sparta.week02.repository.RefreshTokenRepository;
 import com.sparta.week02.security.UserDetailsImpl;
@@ -51,8 +51,6 @@ public class JwtAuthehnticationFilter extends UsernamePasswordAuthenticationFilt
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
         PrintWriter out = response.getWriter();
         out.println("Login Fail : Check your Username Or Password");
-
-//        super.unsuccessfulAuthentication(request, response, failed);
     }
 
     @Override

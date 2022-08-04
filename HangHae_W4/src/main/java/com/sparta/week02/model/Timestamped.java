@@ -1,7 +1,6 @@
 package com.sparta.week02.model;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -12,9 +11,8 @@ import java.time.LocalDateTime;
 
 
 @MappedSuperclass // 상속했을 때, 컬럼으로 인식하게 합니다.
-@AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-@NoArgsConstructor // 시간을 자동으로 반영하도록 설정
+@EntityListeners(AuditingEntityListener.class) // 시간을 자동으로 반영하도록 설정
+@Getter
 public abstract class Timestamped {
     
     @CreatedDate // 생성일

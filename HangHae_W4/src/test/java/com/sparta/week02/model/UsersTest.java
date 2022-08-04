@@ -9,7 +9,7 @@ class UsersTest {
 
     @Test
 //    @DisplayName("TestOK")
-    void createUser_Normal(){
+    void createUser_Normal() {
         int id = 1;
         String username = "test name";
         String password = "1234";
@@ -26,6 +26,5 @@ class UsersTest {
         assertEquals(password, user.getPassword());
         assertEquals(email, user.getEmail());
         assertEquals(role, user.getRole());
-
     }
 }
