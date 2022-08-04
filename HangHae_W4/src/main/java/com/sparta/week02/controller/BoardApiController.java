@@ -1,7 +1,7 @@
 package com.sparta.week02.controller;
 
 import com.sparta.week02.dto.BoardDto;
-import com.sparta.week02.dto.BoardResponseDto;
+import com.sparta.week02.dto.BoardRequestDto;
 import com.sparta.week02.dto.ResponseDto;
 import com.sparta.week02.model.Board;
 import com.sparta.week02.repository.BoardRepository;
@@ -22,10 +22,10 @@ public class BoardApiController {
 
     // 글쓰기
     @PostMapping("/api/boards")
-    public ResponseDto<BoardResponseDto> write(@RequestBody Board board
-    ,@AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseDto<BoardDto> write(@RequestBody Board board
+    , @AuthenticationPrincipal UserDetailsImpl userDetails){
         System.out.println("글쓰기 테스트");
-        BoardResponseDto writeBoard = boardService.write(board, userDetails.getUser());
+        BoardDto writeBoard = boardService.write(board, userDetails.getUser());
         return new ResponseDto<>("SUCCESS", writeBoard);
     }
 
@@ -46,9 +46,9 @@ public class BoardApiController {
     // 특정 게시글 수정하기
     @PutMapping("/api/boards/{id}")
     public ResponseDto<Board> updateBoard(@PathVariable int id,
-                                          @RequestBody BoardDto boardDto,
+                                          @RequestBody BoardRequestDto boardRequestDto,
                                           @AuthenticationPrincipal UserDetailsImpl userDetails){
-        Board boardId = boardService.updateBoard(id, boardDto, userDetails.getUser());
+        Board boardId = boardService.updateBoard(id, boardRequestDto, userDetails.getUser());
         return new ResponseDto<>("SUCCESS", boardId);
     }
 

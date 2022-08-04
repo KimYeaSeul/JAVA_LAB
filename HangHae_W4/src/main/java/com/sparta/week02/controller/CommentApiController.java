@@ -24,7 +24,7 @@ public class CommentApiController {
 
     }
 
-    @GetMapping("/board/comment")
+    @GetMapping("/board/comments")
     public List<Comment> getComment(){
         return commentService.getComment();
     }

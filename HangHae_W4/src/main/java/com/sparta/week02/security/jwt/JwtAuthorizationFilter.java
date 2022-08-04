@@ -20,7 +20,6 @@ import java.util.Optional;
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private final UserRepository userRepository;
-
     private final TokenProvider tokenProvider;
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository, TokenProvider tokenProvider) {
         super(authenticationManager);
@@ -34,49 +33,40 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             throws ServletException, IOException {
 
         System.out.println("인증이나 권한이 필요한 주소 요청이 됨.");
-        // 얘 안지워줘서 에러남
-//		super.doFilterInternal(request, response, chain);
 
         String jwtHeader = request.getHeader(JwtProperties.ACCESS_HEADER);
-        System.out.println("jwtHeader : " + jwtHeader);
-        String refreshJwt = request.getHeader("refreshtoken");
+        String refreshJwt = request.getHeader(JwtProperties.REFRESH_HEADER);
 
-        System.out.println("refreshtoken : " + refreshJwt);
-
-        // header가 있는지 확인
-        if(jwtHeader == null || !jwtHeader.startsWith("Bearer")
-        || refreshJwt == null || !refreshJwt.startsWith("Refresh")) {
-            System.out.println("틀렸다능!");
+        // header에 access token과 refresh token이 있는지 확인
+        if(jwtHeader == null || !jwtHeader.startsWith(JwtProperties.ACCESS_PREFIX)
+        || refreshJwt == null || !refreshJwt.startsWith(JwtProperties.REFRESH_PREFIX)) {
             chain.doFilter(request, response);
             return;
         }
-
-
+        System.out.println("jwtHeader = "+ jwtHeader);
         // JWT Token을 검증을 해서 정상적인 사용자인지 확인
-        String jwtToken = request.getHeader(JwtProperties.ACCESS_HEADER).replace(JwtProperties.TOKEN_PREFIX, "");
+        String jwtToken = request.getHeader(JwtProperties.ACCESS_HEADER).replace(JwtProperties.ACCESS_PREFIX, "");
         String username = tokenProvider.getName(jwtToken);
-//                JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(jwtToken).getClaim("username").asString();
 
-         System.out.println("검증 완료 후 이름 추출 " + username);
+//         System.out.println("검증 완료 후 이름 추출 " + username);
+        // null이면 필터를 다시 타쇼
         if(username == null) {
-            System.out.println("틀렸다능!");
             chain.doFilter(request, response);
             return;
         }
-//        // 서명이 정상적으로 되었다.
-            Optional<Users> userEntity = userRepository.findByUsername(username);
-            if(userEntity.isPresent()){
-                Users user = userEntity.get();
-                UserDetailsImpl principalDetails = new UserDetailsImpl(user);
+        // 서명이 정상적으로 되었다면
+        Optional<Users> userEntity = userRepository.findByUsername(username);
+        if(userEntity.isPresent()){
+            Users user = userEntity.get();
+            UserDetailsImpl principalDetails = new UserDetailsImpl(user);
 
-                // jwt 토큰 서명을 통해서 서명이 정상이면 authentication 객체를 (강제로) 만들어 준다.
-                Authentication authentication =
-                        new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities()); // password = null
-                System.out.println("authentication = "+authentication);
-                System.out.println("됐냐능?");
-                // 강제로 시큐리티 세션에 접근하여 authentication 객체를 저장. -> 로그인 완료
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
-            chain.doFilter(request, response);
+            // jwt 토큰 서명을 통해서 서명이 정상이면 authentication 객체를 (강제로) 만들어 준다.
+            Authentication authentication =
+                    new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities()); // password = null
+
+            // 강제로 시큐리티 세션에 접근하여 authentication 객체를 저장. -> 로그인 완료
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+        chain.doFilter(request, response);
     }
+}
