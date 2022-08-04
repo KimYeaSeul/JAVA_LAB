@@ -10,8 +10,8 @@ import com.sparta.week02.repository.CommentRepository;
 import com.sparta.week02.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -20,7 +20,7 @@ public class CommentService {
     private final UserRepository userRepository;
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
-
+    @Transactional
     public Comment save(int boardId, Comment comment, Users user) {
 
         Board requestBoard = boardRepository.findById(boardId)
@@ -36,7 +36,7 @@ public class CommentService {
         return commentRepository.save(reqComment);
 
     }
-
+    @Transactional(readOnly = false)
     public List<Comment> getComment() {
         return commentRepository.findAll();
     }
@@ -53,7 +53,7 @@ public class CommentService {
             throw new CustomException(ErrorResponse.NOT_MATCH_USER);
         }
     }
-
+    @Transactional
     public int deleteComment(int id, Users user) {
         Comment delBoard = commentRepository.findById(id).orElseThrow(
                 ()-> new CustomException(ErrorResponse.NOT_FOUND_COMMENT));
