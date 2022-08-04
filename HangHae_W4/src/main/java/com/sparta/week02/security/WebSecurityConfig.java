@@ -29,6 +29,20 @@ public class WebSecurityConfig{
     private final AuthenticationConfiguration authenticationManager;
     private final UserRepository userRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+    private static final String[] PERMIT_URL_ARRAY = {
+            /* swagger v2 */
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            /* swagger v3 */
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger"
+    };
 //    private final UserDetailsServiceImpl userDetailsService;
 //    private final JwtAuthehnticationFilter jwtAuthehnticationFilter;
     @Bean
@@ -61,6 +75,8 @@ public class WebSecurityConfig{
                         .antMatchers("/user/**")
                         .permitAll()
                         .antMatchers("/boards/**")
+                        .permitAll()
+                        .antMatchers(PERMIT_URL_ARRAY)
                         .permitAll()
                         .anyRequest().authenticated()
                 )

@@ -61,7 +61,7 @@ public class BoardService {
     // public int update(int id, Board board){
     // Dto 사용
     @Transactional
-    public Board updateBoard(int id, BoardDto boardDto, Users user){
+    public Board updateBoard(int id, BoardDto boardDto, Users user){ // 세션에 있는 유저
         // 영속화
         Board updateBoard = boardRepository.findById(id).orElseThrow(
                 ()-> new CustomException(ErrorResponse.NOT_FOUND_BOARD));

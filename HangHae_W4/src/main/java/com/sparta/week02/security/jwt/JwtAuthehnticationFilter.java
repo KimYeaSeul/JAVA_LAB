@@ -66,8 +66,6 @@ public class JwtAuthehnticationFilter extends UsernamePasswordAuthenticationFilt
         String access_token = tokenProvider.generateAccessToken(userdetails.getUser().getUsername());
         String refresh_token = tokenProvider.generateRefreshToken(userdetails.getUser().getUsername());
         RefreshToken rttr = refreshTokenRepository.findByUser(userdetails.getUser());
-        System.out.println(" repository refreshtoken " + rttr.getRefreshToken());
-        System.out.println("refreshtoken " + refresh_token);
 
         if(rttr == null){
             RefreshToken rt = RefreshToken.builder()

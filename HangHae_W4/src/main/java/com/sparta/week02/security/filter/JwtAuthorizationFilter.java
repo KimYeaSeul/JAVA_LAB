@@ -39,7 +39,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         // 얘 안지워줘서 에러남
 //		super.doFilterInternal(request, response, chain);
 
-        String jwtHeader = request.getHeader(JwtProperties.HEADER_STRING);
+        String jwtHeader = request.getHeader(JwtProperties.ACCESS_HEADER);
         System.out.println("jwtHeader : " + jwtHeader);
         String refreshJwt = request.getHeader("refreshtoken");
 
@@ -55,7 +55,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
 
         // JWT Token을 검증을 해서 정상적인 사용자인지 확인
-        String jwtToken = request.getHeader(JwtProperties.HEADER_STRING).replace(JwtProperties.TOKEN_PREFIX, "");
+        String jwtToken = request.getHeader(JwtProperties.ACCESS_HEADER).replace(JwtProperties.TOKEN_PREFIX, "");
         String username = tokenProvider.getName(jwtToken);
 //                JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(jwtToken).getClaim("username").asString();
 

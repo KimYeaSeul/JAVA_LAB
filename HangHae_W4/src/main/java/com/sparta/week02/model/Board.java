@@ -36,7 +36,7 @@ public class Board extends Timestamped{
     @JoinColumn(name = "author")
     private Users author; //DB는 object를 저장할 수 없다. FK사용, but Java는 object를 저장할 수 있다.
 
-    @OneToMany(mappedBy = "board", fetch=FetchType.EAGER) //mappedBy는 연관관계의 주인이 아니다.(FK가 아니다.) DB에 컬럼을 만들지 마세요. Board를 Select할 때 Join문을 통해서 Reply값을 얻기 위해서 필요한거에용.
+    @OneToMany(mappedBy = "board", fetch=FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true ) //mappedBy는 연관관계의 주인이 아니다.(FK가 아니다.) DB에 컬럼을 만들지 마세요. Board를 Select할 때 Join문을 통해서 Reply값을 얻기 위해서 필요한거에용.
     private List<Comment> reply;
 
     public void update(BoardDto boardDto){

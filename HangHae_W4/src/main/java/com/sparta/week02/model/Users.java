@@ -1,5 +1,6 @@
 package com.sparta.week02.model;
 
+import com.sparta.week02.dto.UsersDto;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -42,10 +43,17 @@ public class Users extends Timestamped{
         this.email = email;
         this.role = role;
     }
-    public Users(String username, String password, UserRoleEnum role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
+//    public Users(String username, String password, UserRoleEnum role) {
+//        this.username = username;
+//        this.password = password;
+//        this.role = role;
+//    }
+    public Users(UsersDto user, int id){
+        this.id = id;
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.email = user.getEmail();
+        this.role = user.getRole();
     }
 
 }
