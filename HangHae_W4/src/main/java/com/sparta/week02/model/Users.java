@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity // 시간을 자동으로 반영하도록 설정
+@Entity
 public class Users extends Timestamped{
 
     @Id
@@ -36,11 +36,6 @@ public class Users extends Timestamped{
         this.email = email;
         this.role = role;
     }
-//    public Users(String username, String password, UserRoleEnum role) {
-//        this.username = username;
-//        this.password = password;
-//        this.role = role;
-//    }
     public Users(UsersDto user, int id){
         this.id = id;
         this.username = user.getUsername();

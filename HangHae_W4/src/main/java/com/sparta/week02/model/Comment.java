@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -28,9 +27,6 @@ public class Comment extends Timestamped {
     @JsonIgnore
     @JoinColumn(name="userId")
     private Users author;
-
-    private LocalDateTime createAt;
-    private LocalDateTime modifiedAt;
 
     public void update(String title, String content){
         this.title = title;

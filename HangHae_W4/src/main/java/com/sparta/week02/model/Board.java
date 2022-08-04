@@ -1,11 +1,10 @@
 package com.sparta.week02.model;
 
-import com.sparta.week02.dto.BoardDto;
+import com.sparta.week02.dto.BoardRequestDto;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -28,7 +27,6 @@ public class Board extends Timestamped{
 
     @Column(nullable = false)
     private String password;
-
     @Lob
     private String content;
 
@@ -36,14 +34,12 @@ public class Board extends Timestamped{
     @JoinColumn(name = "author")
     private Users author; //DB는 object를 저장할 수 없다. FK사용, but Java는 object를 저장할 수 있다.
 
-    @OneToMany(mappedBy = "board", fetch=FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true ) //mappedBy는 연관관계의 주인이 아니다.(FK가 아니다.) DB에 컬럼을 만들지 마세요. Board를 Select할 때 Join문을 통해서 Reply값을 얻기 위해서 필요한거에용.
-    private List<Comment> reply;
+    //mappedBy는 연관관계의 주인이 아니다.(FK가 아니다.) DB에 컬럼을 만들지 마세요. Board를 Select할 때 Join문을 통해서 Reply값을 얻기 위해서 필요한거에용.
+    @OneToMany(mappedBy = "board", fetch=FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true )
+    private List<Comment> comment;
 
-    public void update(BoardDto boardDto){
-        this.title = boardDto.getTitle();
-        this.content = boardDto.getContent();
+    public void update(BoardRequestDto boardRequestDto){
+        this.title = boardRequestDto.getTitle();
+        this.content = boardRequestDto.getContent();
     }
-    private LocalDateTime createAt;
-    private LocalDateTime modifiedAt;
-
 }

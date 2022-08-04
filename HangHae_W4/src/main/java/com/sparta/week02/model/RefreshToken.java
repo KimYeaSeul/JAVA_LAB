@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -19,15 +20,5 @@ public class RefreshToken {
     private Users user;
 
     private String refreshToken;
-
-    @Builder
-    public RefreshToken(Users user, String token) {
-        this.user = user;
-        this.refreshToken = token;
-    }
-
-    public void updateValue(String token) {
-        this.refreshToken = token;
-    }
 
 }
